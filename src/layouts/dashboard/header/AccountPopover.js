@@ -39,7 +39,7 @@ export default function AccountPopover() {
 
   const logoutHandle = () => {
     // alert('logoutHandle');
-    localStorage.removeItem('token')
+    localStorage.removeItem('Token')
     navigate('/login')
     
   }

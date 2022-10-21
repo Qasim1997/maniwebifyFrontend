@@ -17,6 +17,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginForm } from '../sections/auth/login';
 import Iconify from '../components/iconify';
 import Logo from '../components/logo';
+import {useLoginUser} from '../Service/Login'
 import useResponsive from '../hooks/useResponsive';
 // components
 import { useAddSigninData } from '../hooks/useSigninData';
@@ -76,22 +77,18 @@ function LoginPage() {
     msg: "",
     type: ""
   })
+  const {mutateAsync:login} = useLoginUser()
   useEffect(() => {
     reset()
   }, [isSubmitSuccessful])
-
+// login kar k console.log check karo
   const onSubmit = async (data) => {
-    await axios.post('http://127.0.0.1:8000/api/admin/login', {
-      email: data.email,
-      password: data.password
-    })
+    login(data)
       .then((response) => {
-        console.log(response.data.result, 'response data');
-        localStorage.setItem('token', response.data.result);
+        localStorage.setItem('Token', response.data.result);
         setError({ status: true, msg: response.data.message, type: 'success' })
-        navigate('/app')
+        navigate('/dashboard/app')
       }).catch((error) => {
-        console.log(error, 'error');
         console.log( error.response.data.result, ' error.response.data.result');
         setError({ status: true, msg: error.response.data.result, type: 'error' })
       });

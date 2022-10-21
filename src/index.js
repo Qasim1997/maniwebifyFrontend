@@ -4,20 +4,24 @@ import { HelmetProvider } from 'react-helmet-async';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 //
+import { QueryClientProvider,QueryClient } from 'react-query';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import reportWebVitals from './reportWebVitals';
 
+
 // ----------------------------------------------------------------------
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-
+const queryClient = new QueryClient()
 root.render(
+  <QueryClientProvider client={queryClient}>
   <HelmetProvider>
     <BrowserRouter>
       <App />
     </BrowserRouter>
   </HelmetProvider>
+  </QueryClientProvider>
 );
 
 // If you want to enable client cache, register instead.
